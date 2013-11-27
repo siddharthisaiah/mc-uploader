@@ -13,6 +13,10 @@ import java.util.Date;
 import java.text.*;
 import com.kapowtech.robosuite.api.java.repository.engine.*;
 import com.kapowtech.robosuite.api.java.util.*;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author ben.breakstone@kapowsoftware.com
@@ -177,25 +181,24 @@ public class SimpleRepositoryUploader {
 
     
     public static void uploadInitiation(String uploadDirectory){
-    //Starts the upload process from the uploadDirectory
-    //nulls for MC configured not to require authentication
-        String user = null;
-        String password = null;
-        String[] address = { "192.168.200.103","192.168.200.87", "192.168.200.225","192.168.200.96","192.168.200.145",
-                             "192.168.200.151","192.168.200.141","192.168.200.109","192.168.200.51","192.168.200.158",
-                             "192.168.200.156","192.168.200.236","192.168.200.52","192.168.200.61","192.168.200.240",
-                             "192.168.200.113" 
-        };
-        
-        int mgmtConsolePort = 50080;
-        
-        for( int i = 0; i < address.length; i++) {
-            
-            String mgmtConsoleHost = address[i];     
-            
-            uploadRobotFolderToRepository(uploadDirectory, user, password, mgmtConsoleHost, mgmtConsolePort);
-            uploadTypeFolderToRepository(uploadDirectory, user, password, mgmtConsoleHost, mgmtConsolePort);
-            uploadSnippetFolderToRepository(uploadDirectory, user, password, mgmtConsoleHost, mgmtConsolePort);
+        try {
+            //Starts the upload process from the uploadDirectory
+            //nulls for MC configured not to require authentication
+                String user = null;
+                String password = null;
+                List address = IpRetrieval.sqlFu();
+                int mgmtConsolePort = 50080;
+                
+                for( int i = 0; i < address.size(); i++) {
+                    String mgmtConsoleHost = (String) address.get(i);     
+                    uploadRobotFolderToRepository(uploadDirectory, user, password, mgmtConsoleHost, mgmtConsolePort);
+                    uploadSnippetFolderToRepository(uploadDirectory, user, password, mgmtConsoleHost, mgmtConsolePort);
+                    uploadSnippetFolderToRepository(uploadDirectory, user, password, mgmtConsoleHost, mgmtConsolePort);
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(SimpleRepositoryUploader.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SimpleRepositoryUploader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
