@@ -18,7 +18,7 @@ import org.apache.commons.io.FileUtils;
  */
 public class McUploaderGUI extends JFrame {
     
-    private static JFrame mainFrame;
+    public static JFrame mainFrame;
     private static DefaultListModel modelFiles;
     private static JList fileList;
     private static File[] selectedFiles;
@@ -70,7 +70,7 @@ public class McUploaderGUI extends JFrame {
         });
         mainPanel.add(addFilesButton,c);
         
-        //Add a clear files button to mainPanel
+        //Add a "clear files" button to mainPanel
         JButton clearButton = new JButton("Clear Files");
         c.gridx = 0;
         c.gridy = 20;
@@ -84,7 +84,7 @@ public class McUploaderGUI extends JFrame {
         });
         mainPanel.add(clearButton,c);
         
-        //Add an upload files button to mainPanel
+        //Add an "upload files" button to mainPanel
         JButton uploadButton = new JButton("Upload");
         c.gridx = 0;
         c.gridy = 30;
@@ -110,10 +110,7 @@ public class McUploaderGUI extends JFrame {
         fileList = new JList(modelFiles);
         fileList.setPreferredSize(new Dimension(225, 365));
         
-        //Scrollpane to hold the jlist
-        //TODO: scrollbar or scrollpane to hold the jlist for scrolling
         
-        //TODO: Add actionlistener on jlist to clear only selected robots instead of just all robots from list
         
         listPanel.add(fileList);
         
@@ -155,24 +152,24 @@ public class McUploaderGUI extends JFrame {
     }
     
     public static void uploadStuff() throws IOException{
-        //copy files
+        //copy files to dirname
         try{
             copyCat();
+            //upload files
+            String dirname = "C:\\akdoZdkowwkdjfp\\";
+            File dir = new File(dirname);
+            SimpleRepositoryUploader.uploadInitiation(dirname);
+            //delete files from disk and remove file names from JList
+            FileUtils.deleteDirectory(dir);
+            modelFiles.clear();
+            //show upload successfull message
+            JOptionPane.showMessageDialog(mainFrame, "Files uploaded!");
+        
         }catch (NullPointerException nlp){
             JOptionPane.showMessageDialog(mainFrame, "Add Files to Upload First");
         }
         
-        //upload files
-        String dirname = "C:\\akdoZdkowwkdjfp\\";
-        File dir = new File(dirname);
-        SimpleRepositoryUploader.uploadInitiation(dirname);
         
-        //delete files from disk and JList
-        FileUtils.deleteDirectory(dir);
-        modelFiles.clear();
-        
-        //show upload successfull message
-        JOptionPane.showMessageDialog(mainFrame, "All Files Uploaded Successfully!");
         
     }
     

@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import static mcuploader.McUploaderGUI.mainFrame;
 
 /**
  * @author ben.breakstone@kapowsoftware.com
@@ -73,6 +75,7 @@ public class SimpleRepositoryUploader {
                     // an error connecting to the repository
                     e.printStackTrace();
                     writeToLog("ERROR: " + e.getMessage(), uploadDirectory);
+                    JOptionPane.showMessageDialog(mainFrame, "ERROR:Could not upload Robots to " + e.getMessage() + ". Check Roboserver status");
                 }
             }
         }
@@ -110,6 +113,7 @@ public class SimpleRepositoryUploader {
                 // an error connecting to the repository
                 e.printStackTrace();
                 writeToLog("ERROR: " + e.getMessage(), uploadDirectory);
+                JOptionPane.showMessageDialog(mainFrame, "ERROR:Could not upload Types to " + e.getMessage() + ". Check Roboserver status");
             }
         }
     }
@@ -147,6 +151,7 @@ public class SimpleRepositoryUploader {
                 // an error connecting to the repository
                 e.printStackTrace();
                 writeToLog("ERROR: " + e.getMessage(), uploadDirectory);
+                JOptionPane.showMessageDialog(mainFrame, "ERROR:Could not upload Snippets to " + e.getMessage() + ". Check Roboserver status");
             }
         }
     }
@@ -181,12 +186,12 @@ public class SimpleRepositoryUploader {
 
     
     public static void uploadInitiation(String uploadDirectory){
-        try {
+        
             //Starts the upload process from the uploadDirectory
             //nulls for MC configured not to require authentication
                 String user = null;
                 String password = null;
-                List address = IpRetrieval.sqlFu();
+                List address = McUploader.Addresses;
                 int mgmtConsolePort = 50080;
                 
                 for( int i = 0; i < address.size(); i++) {
@@ -195,10 +200,6 @@ public class SimpleRepositoryUploader {
                     uploadSnippetFolderToRepository(uploadDirectory, user, password, mgmtConsoleHost, mgmtConsolePort);
                     uploadSnippetFolderToRepository(uploadDirectory, user, password, mgmtConsoleHost, mgmtConsolePort);
                 }
-        } catch (SQLException ex) {
-            Logger.getLogger(SimpleRepositoryUploader.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SimpleRepositoryUploader.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    
 }
