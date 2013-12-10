@@ -75,7 +75,7 @@ public class SimpleRepositoryUploader {
                     // an error connecting to the repository
                     e.printStackTrace();
                     writeToLog("ERROR: " + e.getMessage(), uploadDirectory);
-                    JOptionPane.showMessageDialog(mainFrame, "ERROR:Could not upload Robots to " + e.getMessage() + ". Check Roboserver status");
+                    JOptionPane.showMessageDialog(mainFrame, "ERROR: " + e.getMessage() + ". Check Roboserver status");
                 }
             }
         }
@@ -113,7 +113,7 @@ public class SimpleRepositoryUploader {
                 // an error connecting to the repository
                 e.printStackTrace();
                 writeToLog("ERROR: " + e.getMessage(), uploadDirectory);
-                JOptionPane.showMessageDialog(mainFrame, "ERROR:Could not upload Types to " + e.getMessage() + ". Check Roboserver status");
+                JOptionPane.showMessageDialog(mainFrame, "ERROR: " + e.getMessage() + ". Check Roboserver status");
             }
         }
     }
@@ -151,7 +151,7 @@ public class SimpleRepositoryUploader {
                 // an error connecting to the repository
                 e.printStackTrace();
                 writeToLog("ERROR: " + e.getMessage(), uploadDirectory);
-                JOptionPane.showMessageDialog(mainFrame, "ERROR:Could not upload Snippets to " + e.getMessage() + ". Check Roboserver status");
+                JOptionPane.showMessageDialog(mainFrame, "ERROR: " + e.getMessage() + ". Check Roboserver status");
             }
         }
     }
